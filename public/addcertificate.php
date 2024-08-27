@@ -5,10 +5,11 @@ include "../config/config.php";
 $user_id = $_SESSION['user_id'];
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if (isset($_POST['submit'])) {
-        $title = htmlspecialchars(trim($_POST['title']));
+        $title = htmlspecialchars(trim($_POST['Title']));
         $organization = htmlspecialchars(trim($_POST['organization']));
-        $date_earned = $_POST['date_earned'];
+       
         $description = htmlspecialchars(trim($_POST['description']));
+        $issuer = htmlspecialchars(trim($_POST['issuer']));
         $target_dir = "uploads/";
         $uploadOk = 1;
         $document_path = null;
@@ -17,23 +18,23 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 die("Failed to create upload directory.");
             }
         }
-        if (isset($_FILES['certificate_file']) && $_FILES['certificate_file']['error'] == UPLOAD_ERR_OK) {
-            $file_name = basename($_FILES["certificate_file"]["name"]);
+        if (isset($_FILES['image']) && $_FILES['image']['error'] == UPLOAD_ERR_OK) {
+            $file_name = basename($_FILES["image"]["name"]);
             $file_type = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
             $unique_name = uniqid() . "." . $file_type;
             $target_file = $target_dir . $unique_name;
-            if (!$_FILES["certificate_file"]["size"]) {
+            if (!$_FILES["image"]["size"]) {
                 echo "Please upload certificate image/doc!";
             }
 
-            if ($_FILES["certificate_file"]["size"] > 5000000) {
+            if ($_FILES["image"]["size"] > 5000000) {
                 echo "Sorry, your file is too large.";
                 $uploadOk = 0;
             } elseif (!in_array($file_type, ["pdf", "doc", "docx", "jpg", "png"])) {
                 echo "Sorry, only PDF, DOC, DOCX, JPG, and PNG files are allowed.";
                 $uploadOk = 0;
             } else {
-                if (move_uploaded_file($_FILES["certificate_file"]["tmp_name"], $target_file)) {
+                if (move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
                     $document_path = $target_file;
                 } else {
                     echo "Sorry, there was an error uploading your file.";
@@ -44,11 +45,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         if ($uploadOk) {
             if ($document_path) {
-                $sql = "INSERT INTO certifications (user_id, title, organization, date_earned, description, certificate_file) 
-                    VALUES ('$user_id', '$title', '$organization', '$date_earned', '$description', '$document_path')";
+                $sql = "INSERT INTO certifications (user_id, Title, organization, description, image,issuer) 
+                    VALUES ('$user_id', '$title', '$organization', '$description', '$document_path','$issuer')";
             } else {
-                $sql = "INSERT INTO certifications (user_id, title, organization, date_earned, description) 
-                    VALUES ('$user_id', '$title', '$organization', '$date_earned', '$description')";
+                $sql = "INSERT INTO certifications (user_id, Title, organization, description,image,issuer) 
+                    VALUES ('$user_id', '$title', '$organization', '$description','$document_path','$issuer')";
             }
 
             if (mysqli_query($conn, $sql)) {
@@ -124,18 +125,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 <form action="addcertificate.php" method="POST" enctype="multipart/form-data">
                     <div class="mb-3">
                         <label for="title">Title:</label>
-                        <input type="text" id="title" name="title" class="form-control"
+                        <input type="text" id="title" name="Title" class="form-control"
                             placeholder="Certification Title" required>
                     </div>
                     <div class="mb-3">
                         <label for="organization">Organization:</label>
                         <input type="text" id="organization" name="organization" class="form-control"
                             placeholder="Issuing Organization" required>
-                    </div>
-                    <div class=" mb-2">
-                        <label for="date_earned">Date:</label>
-                        <input type="date" id="date" name="date_earned" class="form-control" placeholder="Date Earned"
-                            required>
                     </div>
                     <div class="mb-1">
                         <label for="description">Description:</label>
@@ -144,8 +140,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     </div>
                     <div class="mb-3">
                         <label for="document">Certification:</label>
-                        <input type="file" id="document" name="certificate_file" class="form-control"
+                        <input type="file" id="document" name="image" class="form-control"
                             accept=".pdf,.doc,.docx,.jpg,.png" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="organization">Issuer:</label>
+                        <input type="text" id="organization" name="issuer" class="form-control" placeholder="Issuer "
+                            required>
                     </div>
 
                     <input type="submit" name="submit" value=" SAVE">
