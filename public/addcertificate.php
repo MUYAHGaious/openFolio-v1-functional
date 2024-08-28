@@ -2,13 +2,15 @@
 session_start();
 include "../config/config.php";
 
-$user_id = $_SESSION['user_id'];
+// $user_id = $_SESSION['user_id'];
+$user_id = 1;
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if (isset($_POST['submit'])) {
+        $name = htmlspecialchars(trim($_POST['name']));
         $title = htmlspecialchars(trim($_POST['Title']));
         $organization = htmlspecialchars(trim($_POST['organization']));
-       
         $description = htmlspecialchars(trim($_POST['description']));
+        $url = htmlspecialchars(trim($_POST['url']));
         $issuer = htmlspecialchars(trim($_POST['issuer']));
         $target_dir = "uploads/";
         $uploadOk = 1;
@@ -45,11 +47,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         if ($uploadOk) {
             if ($document_path) {
-                $sql = "INSERT INTO certifications (user_id, Title, organization, description, image,issuer) 
-                    VALUES ('$user_id', '$title', '$organization', '$description', '$document_path','$issuer')";
+                $sql = "INSERT INTO certifications (name, Title, organization, description, url, image,issuer,user_id)
+                    VALUES ('$name', '$title', '$organization', '$description','$url', '$document_path', '$issuer', '$user_id')";
             } else {
-                $sql = "INSERT INTO certifications (user_id, Title, organization, description,image,issuer) 
-                    VALUES ('$user_id', '$title', '$organization', '$description','$document_path','$issuer')";
+                $sql = "INSERT INTO certifications (`name`, Title, organization, description, url, image,issuer,user_id) 
+                    VALUES ('$name', '$title', '$organization', '$description','$url', '$document_path', '$issuer', '$user_id')";
+        
             }
 
             if (mysqli_query($conn, $sql)) {
@@ -122,7 +125,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             <div class="col-md-10 offset-md-1 shadow-md bg-transparent mt-6 p-4">
                 <h3 class="text-center mt-5">Add Certification</h3>
 
-                <form action="addcertificate.php" method="POST" enctype="multipart/form-data">
+                <form action="addcertificates.php" method="POST" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label for="name">Name:</label>
+                        <input type="text" id="name" name="name" class=" form-control" placeholder="Certificate name "
+                            required>
+                    </div>
                     <div class="mb-3">
                         <label for="title">Title:</label>
                         <input type="text" id="title" name="Title" class="form-control"
@@ -137,6 +145,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                         <label for="description">Description:</label>
                         <textarea id="description" name="description" class="form-control" placeholder="description"
                             required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="url">Url:</label>
+                        <input type="text" id="url" name="url" class="form-control" placeholder="Certification url"
+                            required>
                     </div>
                     <div class="mb-3">
                         <label for="document">Certification:</label>

@@ -3,7 +3,7 @@ session_start();
 include "../config/config.php";
 
 
-// $certificate_id = 10;
+
 $certificate_id = isset($_GET['id']) ? $_GET['id']: 0;
 
 if ($certificate_id <= 0) {
@@ -17,18 +17,21 @@ $row = mysqli_fetch_assoc($certifications);
 if (!$row) {
     die("Certificate not found.");
 }
-
+$name = $row['name'];
 $title = $row['Title'];
 $organization = $row['organization'];
 $description = $row['description'];
+$name = $row['url'];
 $certificate_file = $row['image'];
 $issuer=$row['issuer'];
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if (isset($_POST['submit'])) {
+        $name = htmlspecialchars(trim($_POST['name']));
         $title = htmlspecialchars(trim($_POST['Title']));
         $organization = htmlspecialchars(trim($_POST['organization']));
         $description = htmlspecialchars(trim($_POST['description']));
+        $url = htmlspecialchars(trim($_POST['url']));
         $issuer = htmlspecialchars(trim($_POST['issuer']));
         $target_dir = "uploads/";
         $uploadOk = 1;
@@ -64,7 +67,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         if ($uploadOk) {
             $sql = "UPDATE certifications 
-                    SET Title = '$Title', organization='$organization', description='$description', image='$document_path', issuer='$issuer' 
+                    SET name = '$name', Title = '$Title', organization='$organization', description='$description',url = '$url' image='$document_path', issuer='$issuer' 
                     WHERE id = $certificate_id";
 
             if (mysqli_query($conn, $sql)) {
@@ -135,9 +138,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 <form action="editcertificate.php?id=<?php echo $certificate_id; ?>" method="POST"
                     enctype="multipart/form-data">
                     <div class="mb-3">
+                        <label for="name">Name:</label>
+                        <input type="text" id="title" name="name" value="<?php echo htmlspecialchars($name); ?>"
+                            class="form-control" required>
+                    </div>
+                    <div class="mb-3">
                         <label for="Title">Title:</label>
                         <input type="text" id="title" name="Title" value="<?php echo htmlspecialchars($title); ?>"
-                            class="form-control" placeholder="Certification Title" required>
+                            class="form-control" required>
                     </div>
                     <div class="mb-3">
                         <label for="organization">Organization:</label>
@@ -150,6 +158,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                         <label for="description">Description:</label>
                         <textarea id="description" name="description" class="form-control"
                             required><?php echo htmlspecialchars($description); ?></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="name">Url:</label>
+                        <input type="text" id="url" name="url" value="<?php echo htmlspecialchars($url); ?>"
+                            class="form-control" required>
                     </div>
                     <div class="mb-3">
                         <label for="image">Certificate File:</label>
