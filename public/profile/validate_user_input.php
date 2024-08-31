@@ -42,5 +42,5 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Redirect back to the profile page
    $_SESSION['message'] = "Profile updated successfully!";
 
-   header('location: index.php');
+   header('location: ../dashboard.php');
 }

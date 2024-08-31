@@ -34,6 +34,6 @@ use Dotenv\Store\File\Paths;
     <!-- button to go to add skills -->
 
     <div class=" bgpurple text-white p-2 w-25 rounded mt-5 ">
-        <a href="/skills/add.php" class="text-white" class="link" style="text-decoration: none;">Add Skill</a>
+        <a href="./skills/add.php" class="text-white" class="link" style="text-decoration: none;">Add Skill</a>
     </div>
 </div>
