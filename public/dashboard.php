@@ -1,18 +1,32 @@
 <?php 
 
-include "middleware.php" ; ?>
+include "middleware.php" ; 
+include "../includes/header.php";
+?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
-</head>
-<body>
+<link rel="stylesheet" href="./css/dashboard.css">
+<link rel="stylesheet" href="./css/style.css">
+<body class="bgpurple">
+    <div class="navbar">
+        <div class="navlinks">
+            <ul class="active">
+                <li><a href="profile/">profile</a></li>
+                <li><a href="">skills</a></li>
+                <li><a href="">certificatins</a></li>
+                <li><a href="">project</a></li>
+                <li><a href="">logout</a></li>
 
-
-    <h1>Welcome</h1>
+            </ul>
+        </div>
+    </div>
     
+
+    <?php 
+
+    include "profile.php";
+    include "skills/index.php";
+    // include "../includes/list_projects.php";
+
+    ?>
 </body>
 </html>

@@ -1,0 +1,79 @@
+.img{
+    margin-bottom: 30px;
+    height: 200px;
+    width: 225px;
+    margin-left: 10px;
+    display: flex;
+    flex-wrap: wrap;
+ }
+ img{
+     border-radius: 10px;
+     padding: 5px;
+     width: 225px;
+     height: 225px;
+     margin-bottom:2px;
+     display: flex;
+     flex-wrap: wrap;
+ }
+ .container{
+     margin: auto;
+     background-color: rgb(243, 225, 228);
+     border-radius: 10px;
+     display: flex;
+     flex-direction: row;
+     flex-wrap: wrap;
+     justify-content:space-between;
+     align-items: center;
+     width: 50%;
+     min-width: 300px;
+    
+ }
+ .certificates{
+     display: flex;
+     flex-direction: row;
+     float: left;
+     margin: 10px;
+     padding: 10px;
+     flex-wrap: wrap;
+
+ }
+
+ .details{
+     display: flex;
+     flex-direction: column;
+     background-color: rgb(221, 210, 210);
+     border-radius: 4px;
+     height: 100px;
+     width: 200px;
+     flex-wrap: wrap;
+ }
+ .text{
+     width: 200px;
+     height: 200px;
+     
+     padding: 20px;
+     display: flex;
+     flex-wrap: wrap;
+     flex-direction: column;
+     justify-content: space-around;
+ }
+ p{
+     margin: 2px;
+ }
+ .certificate{
+     display: flex;
+     flex-direction: row-reverse;
+     justify-content: flex-end;
+     flex-wrap: wrap;
+     float: right;
+     margin: 10px;
+     padding: 10px;
+     margin-right: 0;
+     padding-right: 0; 
+     right: 0;
+
+ }
+ .explain{
+     font-size: .75rem;
+     font-weight: bold;
+ }

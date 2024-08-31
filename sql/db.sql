@@ -3,7 +3,7 @@ CREATE TABLE users (
     username VARCHAR(100) UNIQUE NOT NULL,
     password VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL,
-    address VARCHAR(255) NOT NULL,
+    address VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE certifications (
