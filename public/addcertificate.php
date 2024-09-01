@@ -2,13 +2,17 @@
 session_start();
 include "../config/config.php";
 
-// $user_id = $_SESSION['user_id'];
-$user_id = 1;
+$user_id = $_SESSION['user_id'];
+if (empty($user_id)) {
+    die("User ID is missing or invalid.");
+}
+
+
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if (isset($_POST['submit'])) {
         $name = htmlspecialchars(trim($_POST['name']));
         $title = htmlspecialchars(trim($_POST['Title']));
-        $organization = htmlspecialchars(trim($_POST['organization']));
+        $organisation = htmlspecialchars(trim($_POST['organisation']));
         $description = htmlspecialchars(trim($_POST['description']));
         $url = htmlspecialchars(trim($_POST['url']));
         $issuer = htmlspecialchars(trim($_POST['issuer']));
@@ -47,16 +51,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         if ($uploadOk) {
             if ($document_path) {
-                $sql = "INSERT INTO certifications (name, Title, organization, description, url, image,issuer,user_id)
-                    VALUES ('$name', '$title', '$organization', '$description','$url', '$document_path', '$issuer', '$user_id')";
+                $sql = "INSERT INTO certifications (name, Title, organisation, description, url, image,issuer,user_id)
+                    VALUES ('$name', '$title', '$organisation', '$description','$url', '$document_path', '$issuer', '$user_id')";
             } else {
-                $sql = "INSERT INTO certifications (`name`, Title, organization, description, url, image,issuer,user_id) 
-                    VALUES ('$name', '$title', '$organization', '$description','$url', '$document_path', '$issuer', '$user_id')";
+                $sql = "INSERT INTO certifications (`name`, Title, organisation, description, url, image,issuer,user_id) 
+                    VALUES ('$name', '$title', '$organisation', '$description','$url', '$document_path', '$issuer', '$user_id')";
         
             }
 
             if (mysqli_query($conn, $sql)) {
                 echo "Certification details have been saved.";
+                header('location:./public/display_certification.php');
             } else {
                 echo "Error: " . mysqli_error($conn);
             }
@@ -125,7 +130,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             <div class="col-md-10 offset-md-1 shadow-md bg-transparent mt-6 p-4">
                 <h3 class="text-center mt-5">Add Certification</h3>
 
-                <form action="addcertificates.php" method="POST" enctype="multipart/form-data">
+                <form action="addcertificate.php" method="POST" enctype="multipart/form-data">
                     <div class="mb-3">
                         <label for="name">Name:</label>
                         <input type="text" id="name" name="name" class=" form-control" placeholder="Certificate name "
@@ -137,9 +142,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                             placeholder="Certification Title" required>
                     </div>
                     <div class="mb-3">
-                        <label for="organization">Organization:</label>
-                        <input type="text" id="organization" name="organization" class="form-control"
-                            placeholder="Issuing Organization" required>
+                        <label for="organisation">Organisation:</label>
+                        <input type="text" id="organisation" name="organisation" class="form-control"
+                            placeholder="Issuing Organisation" required>
                     </div>
                     <div class="mb-1">
                         <label for="description">Description:</label>
@@ -157,8 +162,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                             accept=".pdf,.doc,.docx,.jpg,.png" required>
                     </div>
                     <div class="mb-3">
-                        <label for="organization">Issuer:</label>
-                        <input type="text" id="organization" name="issuer" class="form-control" placeholder="Issuer "
+                        <label for="issuer">Issuer:</label>
+                        <input type="text" id="issuer" name="issuer" class="form-control" placeholder="Issuer "
                             required>
                     </div>
 
