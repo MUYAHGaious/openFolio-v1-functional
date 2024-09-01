@@ -2,8 +2,8 @@
 session_start();
 include "../config/config.php";
 
-// $user_id = $_SESSION['user_id'];
-$user_id = 1;
+$user_id = $_SESSION['user_id'];
+// $user_id = 1;
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if (isset($_POST['submit'])) {
         $name = htmlspecialchars(trim($_POST['name']));
