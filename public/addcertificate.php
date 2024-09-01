@@ -3,10 +3,12 @@ session_start();
 include "../config/config.php";
 
 $user_id = $_SESSION['user_id'];
+
 if (empty($user_id)) {
     die("User ID is missing or invalid.");
 }
 
+// $user_id = 1;
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if (isset($_POST['submit'])) {
