@@ -45,7 +45,7 @@ if(isset($_SESSION['error'])){
 
     include "profile.php";
 
-    // include "display_certification.php";
+    include "display_certification.php";
 
 
     $skills = getSkills();
@@ -53,7 +53,6 @@ if(isset($_SESSION['error'])){
     include "skills/index.php";
     include "viewing_projects.php";
     
-    // include "../includes/list_projects.php";
 
     ?>
 </body>

@@ -1,12 +1,11 @@
 <?php
 session_start();
 
-include "../../config/config.php";
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $Skill = $_POST['Skill'];
-    $Proficiency = $_POST['Proficiency'];
-    $Experience = $_POST['Experience'];
-    $Description = $_POST['Description'];
+// include "../../config/config.php";
+// if ($_SERVER["REQUEST_METHOD"] === "POST") {
+//     $name = $_POST['name'];
+//     $proficiency = $_POST['profficiency_level'];
+//     $description = $_POST['description'];
     //adding into the database
 
     //  $db_server="localhost";
@@ -23,23 +22,23 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 // if($conn){
 //     echo " Database connected";
 // } ;
-    try {
-        $sql = "INSERT INTO skills (Skill, Proficiency, Experience, Description)
-    VALUES ('$Skill','$Proficiency','$Experience','$Description')";
-        if (mysqli_query($conn, $sql)) {
-            echo "<br> New record created successfully";
-        } else {
-            echo "Erro:" . $sql . "<br>" . mysqli_error($conn);
-            echo "connection error";
-        }
-    } catch (mysqli_sql_exception $e) {
-        echo "Error: " . $sql . "<br>" . $e->getMessage();
-        echo "Skill already exists";
-    }
-}
+//     try {
+//         $sql = "INSERT INTO skills (name, profficiency_level, description)
+//     VALUES ('$name','$ profficiency_level','$description')";
+//         if (mysqli_query($conn, $sql)) {
+//             echo "<br> New record created successfully";
+//         } else {
+//             echo "Erro:" . $sql . "<br>" . mysqli_error($conn);
+//             echo "connection error";
+//         }
+//     } catch (mysqli_sql_exception $e) {
+//         echo "Error: " . $sql . "<br>" . $e->getMessage();
+//         echo "Skill already exists";
+//     }
+// }
 
 
-?>
+// ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -116,7 +115,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     } elseif (isset($_POST['edit-skill'])) {
         $id = $_POST['id'];
         $name = $_POST['name'];
-        $profficiency = $_POST['profficiency'];
+        $profficiency = $_POST['profficiency_level'];
         $description = $_POST['description'];
 
         $results = editSkill($name, $profficiency, $description, $id);
@@ -128,5 +127,4 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $_SESSION['message'] = "Skill edited";
         header("location: ../dashboard.php");
     }
-
 }

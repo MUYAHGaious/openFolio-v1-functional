@@ -64,7 +64,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
             if (mysqli_query($conn, $sql)) {
                 echo "Certification details have been saved.";
-                header('location:./public/display_certification.php');
+                header('location:./dashboard.php');
             } else {
                 echo "Error: " . mysqli_error($conn);
             }
