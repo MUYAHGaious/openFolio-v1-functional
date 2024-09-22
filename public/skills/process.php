@@ -1,14 +1,15 @@
 <?php
 session_start();
+
 include "../../config/config.php";
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $Skill = $_POST['Skill'];
     $Proficiency = $_POST['Proficiency'];
     $Experience = $_POST['Experience'];
     $Description = $_POST['Description'];
-//adding into the database
+    //adding into the database
 
-//  $db_server="localhost";
+    //  $db_server="localhost";
 //  $db_user="root";
 //  $db_pss="";
 //  $db_name="portfolio_db";
@@ -22,25 +23,23 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 // if($conn){
 //     echo " Database connected";
 // } ;
-try {
-    $sql= "INSERT INTO skills (Skill, Proficiency, Experience, Description)
+    try {
+        $sql = "INSERT INTO skills (Skill, Proficiency, Experience, Description)
     VALUES ('$Skill','$Proficiency','$Experience','$Description')";
-  if(mysqli_query($conn, $sql)){
-    echo "<br> New record created successfully";
-}
-else{
-    echo "Erro:".$sql."<br>". mysqli_error($conn);
-    echo "connection error";
-}
-}
-catch (mysqli_sql_exception $e) {
-    echo "Error: " . $sql . "<br>" . $e->getMessage();
-    echo "Skill already exists";
-}
+        if (mysqli_query($conn, $sql)) {
+            echo "<br> New record created successfully";
+        } else {
+            echo "Erro:" . $sql . "<br>" . mysqli_error($conn);
+            echo "connection error";
+        }
+    } catch (mysqli_sql_exception $e) {
+        echo "Error: " . $sql . "<br>" . $e->getMessage();
+        echo "Skill already exists";
+    }
 }
 
 
- ?>
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -79,4 +78,55 @@ catch (mysqli_sql_exception $e) {
 
 </html>
 <?php
-?>
+
+
+include_once __DIR__ . "/../../oop/classes/Skill.php";
+
+$skilObj = new Skill();
+include_once "../../includes/functions.php";
+
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+
+    if (isset($_POST['submit'])) {
+        $skilObj->setName($_POST['name']);
+        $skilObj->setLevel($_POST['profficiency']);
+        $skilObj->setDescription($_POST['description']);
+
+
+        try {
+
+            $results = $skilObj->save();
+            if (!$results) {
+                $_SESSION['message'] = "Erro:" . $sql . "<br>" . mysqli_error($conn);
+                header("location: add.php");
+            }
+
+            $_SESSION['message'] = "Skill added";
+
+            echo json_encode([
+                "success" => true,
+                "message" => "Skills Added"
+            ]);
+            // exit;
+            header("location: ../dashboard.php");
+
+        } catch (Exception $e) {
+            echo $e->getMessage();
+        }
+    } elseif (isset($_POST['edit-skill'])) {
+        $id = $_POST['id'];
+        $name = $_POST['name'];
+        $profficiency = $_POST['profficiency'];
+        $description = $_POST['description'];
+
+        $results = editSkill($name, $profficiency, $description, $id);
+        if (!$results) {
+            $_SESSION['message'] = "Erro:" . $sql . "<br>" . mysqli_error($conn);
+            header("location: edit.php?id=$id");
+        }
+
+        $_SESSION['message'] = "Skill edited";
+        header("location: ../dashboard.php");
+    }
+
+}

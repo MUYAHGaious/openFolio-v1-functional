@@ -9,7 +9,7 @@ CREATE TABLE users (
 CREATE TABLE certifications (
     id INT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(100) UNIQUE NOT NULL,
-    Title VARCHAR(30) NOT NULL,
+    title VARCHAR(30) NOT NULL,
     organisation VARCHAR(40) NOT NULL,
     description VARCHAR(250) NULL,
     image VARCHAR(255) NULL,
@@ -22,10 +22,10 @@ CREATE TABLE certifications (
 CREATE TABLE projects (
     id INT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(100) UNIQUE NOT NULL,
-    Title VARCHAR(30) NOT NULL,
+    title VARCHAR(30) NOT NULL,
     description VARCHAR(250) NULL,
-    TechnologiesUsed VARCHAR(100) NOT NULL,
-    projectLinks VARCHAR(255) NOT NULL,
+    technologies_used VARCHAR(100) NOT NULL,
+    project_links VARCHAR(255) NOT NULL,
     image VARCHAR(255) NULL,
     url VARCHAR(255) NULL,
     user_id INT,
@@ -35,7 +35,7 @@ CREATE TABLE projects (
 CREATE TABLE skills (
     id INT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(100) UNIQUE NOT NULL,
-    proficiencyLevel VARCHAR(20) NOT NULL,
+    profficiency_level VARCHAR(20) NOT NULL,
     description VARCHAR(250) NULL,
     user_id INT,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE

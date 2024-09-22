@@ -1,15 +1,26 @@
 <?php
-include 'config.php';
+
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+
+include_once __DIR__ .  "/../../includes/functions.php";
+
+$id = $_GET['deleteid'];
 
 if(isset($_GET['deleteid'])){
 
-    $id=$_GET['deleteid'];
-    $sql="DELETE FROM skills WHERE id=$id";
-    if(mysqli_query($conn,$sql)){
-        header('location:display.php');
-    }
-    else{
-        die(mysqli_error($conn));
-    }
+   $result = deleteSkill($id);
+
+   if(!$result){
+        $_SESSION['error'] = "Could not delete skill";
+        header('location: ../dashboard.php');
+   }
+
+   $_SESSION['message'] = "Skill deleted";
+   header('location: ../dashboard.php');
+
+    
 }
 ?>
