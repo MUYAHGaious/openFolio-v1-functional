@@ -6,10 +6,10 @@
 
     <?php
     if (isset($_SESSION['unauthorized'])) { ?>
-        <div class="alert alert-danger mt-5">
-            <?php echo $_SESSION['unauthorized']; ?>
-        </div>
-        <?php
+    <div class="alert alert-danger mt-5">
+        <?php echo $_SESSION['unauthorized']; ?>
+    </div>
+    <?php
 
         unset($_SESSION['unauthorized']);
     }
@@ -56,6 +56,7 @@
 
 
             if (password_verify($password, $user['password'])) {
+                $_SESSION['id'] = $user_id;
                 $_SESSION['user'] = $user;
                 $_SESSION['authenticated'] = true;
                 $_SESSION['message'] = "Successful Login";

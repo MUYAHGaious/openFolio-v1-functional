@@ -1,5 +1,6 @@
 <?php
 session_start();
+include "../../config/config.php";
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $Skill = $_POST['Skill'];
     $Proficiency = $_POST['Proficiency'];
@@ -7,20 +8,20 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $Description = $_POST['Description'];
 //adding into the database
 
- $db_server="localhost";
- $db_user="root";
- $db_pss="";
- $db_name="portfolio_db";
- $conn="";
-try{
-    $conn= mysqli_connect($db_server,$db_user,$db_pss,$db_name);
-}
-catch(mysqli_sql_exception){
-    echo " Database not connected <br>" ;
-}
-if($conn){
-    echo " Database connected";
-} ;
+//  $db_server="localhost";
+//  $db_user="root";
+//  $db_pss="";
+//  $db_name="portfolio_db";
+//  $conn="";
+// try{
+//     $conn= mysqli_connect($db_server,$db_user,$db_pss,$db_name);
+// }
+// catch(mysqli_sql_exception){
+//     echo " Database not connected <br>" ;
+// }
+// if($conn){
+//     echo " Database connected";
+// } ;
 try {
     $sql= "INSERT INTO skills (Skill, Proficiency, Experience, Description)
     VALUES ('$Skill','$Proficiency','$Experience','$Description')";
@@ -51,7 +52,7 @@ catch (mysqli_sql_exception $e) {
 </head>
 
 <body>
-    <button type="add" class=add> <a style="" href="index.html">Add+</a> </button>
+    <button type="add" class=add> <a style="" href="index.php">Add+</a></button>
     <style>
     .add {
         color: white;

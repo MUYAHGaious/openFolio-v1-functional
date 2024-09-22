@@ -9,7 +9,7 @@
 </head>
 
 <body>
-    <form action="" method="POST">
+    <form action="process.php" method="POST">
         <h1>Add Skills</h1>
         <label for="name">Skills</label><br>
         <input type="name" name="Skill" id="name" placeholder="Add your skill" required><br><br>
@@ -41,37 +41,4 @@
     </form>
 </body>
 
-</html><?php
-session_start();
-include_once '../../config/config.php'; // Include your database configuration
-
-// Process the form submission
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $skill = mysqli_real_escape_string($conn, $_POST['Skill']);
-    $proficiency = mysqli_real_escape_string($conn, $_POST['Proficiency']);
-    $experience = mysqli_real_escape_string($conn, $_POST['Experience']);
-    $description = mysqli_real_escape_string($conn, $_POST['Description']);
-
-    // Validate input
-    if (empty($skill) || empty($proficiency) || empty($experience)) {
-        $_SESSION['error'] = "Please fill out all required fields.";
-        header('Location: index.php');
-        exit();
-    }
-
-    // Insert skill into the database
-    $sql = "INSERT INTO skills (skill, proficiency, experience, description) VALUES ('$skill', '$proficiency', '$experience', '$description')";
-
-    if (mysqli_query($conn, $sql)) {
-        $_SESSION['success'] = "Skill added successfully!";
-    } else {
-        $_SESSION['error'] = "Failed to add skill: " . mysqli_error($conn);
-    }
-
-    // Redirect to form page with success or error message
-    header('Location: index.php');
-    exit();
-}
-
-mysqli_close($conn);
-?>
+</html>

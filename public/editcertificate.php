@@ -19,7 +19,7 @@ if (!$row) {
 }
 $name = $row['name'];
 $title = $row['Title'];
-$organization = $row['organization'];
+$organisation = $row['organisation'];
 $description = $row['description'];
 $name = $row['url'];
 $certificate_file = $row['image'];
@@ -29,7 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if (isset($_POST['submit'])) {
         $name = htmlspecialchars(trim($_POST['name']));
         $title = htmlspecialchars(trim($_POST['Title']));
-        $organization = htmlspecialchars(trim($_POST['organization']));
+        $organisation = htmlspecialchars(trim($_POST['organisation']));
         $description = htmlspecialchars(trim($_POST['description']));
         $url = htmlspecialchars(trim($_POST['url']));
         $issuer = htmlspecialchars(trim($_POST['issuer']));
@@ -67,7 +67,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         if ($uploadOk) {
             $sql = "UPDATE certifications 
-                    SET name = '$name', Title = '$Title', organization='$organization', description='$description',url = '$url' image='$document_path', issuer='$issuer' 
+                    SET name = '$name', Title = '$Title', organisation='$organisation', description='$description',url = '$url' image='$document_path', issuer='$issuer' 
                     WHERE id = $certificate_id";
 
             if (mysqli_query($conn, $sql)) {
@@ -148,10 +148,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                             class="form-control" required>
                     </div>
                     <div class="mb-3">
-                        <label for="organization">Organization:</label>
-                        <input type="text" id="organization" name="organization"
-                            value="<?php echo htmlspecialchars($organization); ?>" class="form-control"
-                            placeholder="Issuing Organization" required>
+                        <label for="organisation">Organisation:</label>
+                        <input type="text" id="organisation" name="organisation"
+                            value="<?php echo htmlspecialchars($organisation); ?>" class="form-control"
+                            placeholder="Issuing Organisation" required>
                     </div>
 
                     <div class="mb-1">
@@ -185,8 +185,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                             accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.gif">
                     </div>
                     <div class="mb-2">
-                        <label for="issuer">Date:</label>
-                        <input type="date" id="date" name="issuer" class="form-control"
+                        <label for="issuer">Issuer:</label>
+                        <input type="text" id="issuer" name="issuer" class="form-control"
                             value="<?php echo htmlspecialchars($issuer); ?>" required>
                     </div>
                     <input type="submit" name="submit" value="UPDATE">
