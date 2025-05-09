@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- cdn -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- jquery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!-- js -->
+    <script src="index.js"></script>
+    <title>Users</title>
+</head>
+<body>
+
+    <canvas id="myChart"></canvas>
+
+    <div class="container">
+        <h1>Users</h1>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Age</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <!-- Dynamic user data will be inserted here -->
+            </tbody>
+        </table> <!-- Added missing closing tag -->
+    </div>
+
+    <script>
+        $(document).ready(async function() { // Use async function to handle asynchronous fetch
+            try {
+                const users = await fetchUsers(); // Await the response from fetchUsers
+
+                console.log(users); // Debugging purpose
+
+                var tbody = $("tbody");
+                for (let i = 0; i < users.data.length; i++) {
+                    var user = users.data[i]; // Correct usage of user data
+                    var tr = $("<tr></tr>");
+                    tr.append("<td>" + user.id + "</td>");
+                    tr.append("<td>" + user.name + "</td>");
+                    tr.append("<td>" + user.email + "</td>");
+                    tr.append("<td>" + user.age + "</td>");
+                    tr.append("<td>" + user.status + "</td>");
+                    tr.append("<td><button>Edit</button><button>Delete</button></td>");
+                    tbody.append(tr);
+                }
+            } catch (error) {
+                console.error('Error fetching users:', error);
+            }
+        });
+
+        
+    </script>
+</body>
+</html>

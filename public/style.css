@@ -18,7 +18,7 @@ img{
 .projbutton{
     float: left;
 }
-form{
+/* form{
     display: block;
     margin-left: 35%;
     background-color: rgba(214, 45, 200, 0.349);
@@ -29,7 +29,7 @@ form{
     text-decoration: none;
     border-radius: 7%;
     font-weight: bold;
-}
+} */
 form:hover{
     color: grey;
 }

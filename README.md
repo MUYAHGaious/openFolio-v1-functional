@@ -9,3 +9,5 @@ composer install
 
 open phpmyadmin
 import the file in sql/db.sql
+
+https://supreme-halibut-5r945xxv4jrc9p.github.dev/
